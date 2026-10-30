@@ -123,18 +123,13 @@ class NuevoRegistro(BaseModel):
 
     model_config = {
         "json_schema_extra": {
-            {
-      "_id": "6ac653fac7065eb401c14037",
-      "id_tmdb": 977942,
-      "titulo": "mega gatitos",
-      "popularidad": 144.5524,
-      "calificacion_promedio": 7.988,
-      "conteo_votos": 240,
-      "fecha_lanzamiento": "2026-09-10",
-      "idioma_original": "en",
-      "generos_ids": [36, 18, 28],
-      "plataformas_streaming": []
-    }
+            "example": {
+                "sucursal": "Norte",
+                "producto": "Cafe",
+                "cantidad": 2,
+                "total": 15000,
+                "medio_pago": "Tarjeta",
+            }
         }
     }
 
