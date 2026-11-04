@@ -115,24 +115,25 @@ def estadisticas(agrupar_por: str, sumar: str):
 # ==== CREAR ================================================================
 # 👈 CAMBIA estos campos por los de TU coleccion (mismos nombres y tipos).
 class NuevoRegistro(BaseModel):
-    sucursal: str
-    producto: str
-    cantidad: int
-    total: int
-    medio_pago: str
-
+    titulo: str
+    popularidad: int
+    calificacion_promedio: int
+    conteo_votos: int
+    fecha_lazamiento: str
+    idioma_original: str
+ 
     model_config = {
         "json_schema_extra": {
             "example": {
-                "sucursal": "Norte",
-                "producto": "Cafe",
-                "cantidad": 2,
-                "total": 15000,
-                "medio_pago": "Tarjeta",
-            }
+                "titulo": "pokemon go",
+                "popularidad": 100000000,
+                "calificacion_promedio": 10,
+                "conteo_votos": 15000,
+                "fecha_lazamiento": "2026-08-20",
+                "idioma_original": "en",
         }
     }
-
+}
 
 @app.post("/datos")
 def crear(registro: NuevoRegistro):
