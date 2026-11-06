@@ -117,3 +117,15 @@ if enviar:
         st.cache_data.clear()  # refresca la tabla
     else:
         st.error(f"Error de la API: {r.text}")
+
+# === NUEVO (IA): pregúntale a tus datos ====================================
+st.subheader("🤖 Pregúntale a tus datos")
+pregunta = st.text_input("Escribe tu pregunta (ej. ¿cuál sucursal vendió más?)")
+if st.button("Preguntar") and pregunta:
+    with st.spinner("Pensando..."):
+        r = requests.post(f"{API}/preguntar", json={"pregunta": pregunta}, timeout=120)
+    if r.ok:
+        st.success(r.json()["respuesta"])
+    else:
+        st.error(f"Error: {r.text}")
+# === FIN NUEVO (IA) ========================================================
