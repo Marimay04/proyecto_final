@@ -14,7 +14,7 @@ import pandas as pd
 import requests
 import streamlit as st
 
-API = "http://localhost:8000"  # 👈 si despliegas la API en la nube, cambia esta URL
+API = "https://proyecto-final-371839.onrender.com"  # 👈 si despliegas la API en la nube, cambia esta URL
 
 st.set_page_config(page_title="Proyecto Final", page_icon="📊", layout="wide")
 st.title("📊 Dashboard del Proyecto Final")
@@ -93,22 +93,23 @@ st.dataframe(df, use_container_width=True)
 
 # --- Agregar un registro (POST a la API) -----------------------------------
 # 👈 CAMBIA estos campos por los de TU coleccion (mismos nombres que en la API).
-st.subheader("➕ Agregar registro")
 with st.form("nuevo"):
-    sucursal = st.text_input("sucursal")
-    producto = st.text_input("producto")
-    cantidad = st.number_input("cantidad", min_value=0, step=1)
-    total = st.number_input("total", min_value=0, step=1000)
-    medio_pago = st.text_input("medio_pago")
+    titulo = st.text_input("titulo")
+    popularidad = st.number_input("popularidad", min_value=0.0, step=1.0)
+    calificacion_promedio = st.number_input("calificacion_promedio", min_value=0.0, max_value=10.0, step=0.1)
+    conteo_votos = st.number_input("conteo_votos", min_value=0, step=1)
+    fecha_lanzamiento = st.text_input("fecha_lanzamiento (AAAA-MM-DD)")
+    idioma_original = st.text_input("idioma_original (ej. en, es)")
     enviar = st.form_submit_button("Guardar")
 
 if enviar:
     payload = {
-        "sucursal": sucursal,
-        "producto": producto,
-        "cantidad": int(cantidad),
-        "total": int(total),
-        "medio_pago": medio_pago,
+        "titulo": titulo,
+        "popularidad": float(popularidad),
+        "calificacion_promedio": float(calificacion_promedio),
+        "conteo_votos": int(conteo_votos),
+        "fecha_lanzamiento": fecha_lanzamiento,
+        "idioma_original": idioma_original,
     }
     r = requests.post(f"{API}/datos", json=payload, timeout=10)
     if r.ok:

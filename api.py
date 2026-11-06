@@ -119,7 +119,7 @@ class NuevoRegistro(BaseModel):
     popularidad: int
     calificacion_promedio: int
     conteo_votos: int
-    fecha_lazamiento: str
+    fecha_lanzamiento: str
     idioma_original: str
  
     model_config = {
@@ -129,7 +129,7 @@ class NuevoRegistro(BaseModel):
                 "popularidad": 100000000,
                 "calificacion_promedio": 10,
                 "conteo_votos": 15000,
-                "fecha_lazamiento": "2026-08-20",
+                "fecha_lanzamiento": "2026-08-20",
                 "idioma_original": "en",
         }
     }
