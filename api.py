@@ -15,7 +15,7 @@ IMPORTANTE - Seguridad:
     La cadena de conexion a Mongo NUNCA se escribe en este archivo.
     Se lee de una variable de entorno llamada MONGO_URI (mira .env.example).
 """
-
+import requests  # === NUEVO (IA): para llamar a la API del modelo ===
 import os
 from typing import Optional
 
@@ -36,6 +36,9 @@ except ImportError:
 # ---------------------------------------------------------------------------
 NOMBRE_BD = "proyecto_streaming"            # 👈 tu base de datos en Atlas
 NOMBRE_COLECCION = "peliculas"   # 👈 tu coleccion con los datos ya limpios
+
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+MODELO_IA = "gemini-3.6-flash"   # 👈 usa el mode
 
 # ---------------------------------------------------------------------------
 # 2. CONEXION A MONGODB (segura: la clave viene de una variable de entorno)
@@ -141,3 +144,48 @@ def crear(registro: NuevoRegistro):
     doc = registro.model_dump()
     resultado = coleccion.insert_one(doc)
     return {"mensaje": "Registro creado", "id": str(resultado.inserted_id)}
+
+# === NUEVO (IA): preguntar a los datos en lenguaje natural =================
+class Pregunta(BaseModel):
+    pregunta: str
+ 
+    model_config = {
+        "json_schema_extra": {
+            "example": {"pregunta": "¿Cuál sucursal vendió más?"}
+        }
+    }
+ 
+ 
+@app.post("/preguntar")
+def preguntar(p: Pregunta):
+    """Responde una pregunta en lenguaje natural usando los datos de la coleccion."""
+    if not GEMINI_API_KEY:
+        raise HTTPException(status_code=503, detail="Falta la GEMINI_API_KEY.")
+ 
+    # 1. Una muestra de los datos como contexto para la IA
+    muestra = [_a_json(d) for d in coleccion.find().limit(30)]
+ 
+    # 2. El prompt: instrucciones + datos + pregunta
+    prompt = (
+        "Eres un asistente que responde preguntas sobre estos datos. "
+        "Responde en español, breve y claro. Si la respuesta no está en los datos, dilo.\n\n"
+        f"DATOS (muestra):\n{muestra}\n\nPREGUNTA: {p.pregunta}"
+    )
+ 
+    # 3. Llamamos a la API del modelo (¡es otra API REST!)
+    url = (
+        f"https://generativelanguage.googleapis.com/v1beta/models/"
+        f"{MODELO_IA}:generateContent?key={GEMINI_API_KEY}"
+    )
+    try:
+        r = requests.post(
+            url, json={"contents": [{"parts": [{"text": prompt}]}]}, timeout=30
+        )
+        r.raise_for_status()
+        data = r.json()
+        respuesta = data["candidates"][0]["content"]["parts"][0]["text"]
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"Error al llamar al modelo: {e}")
+ 
+    return {"respuesta": respuesta}
+# === FIN NUEVO (IA) ========================================================
