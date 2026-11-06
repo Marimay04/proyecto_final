@@ -116,8 +116,8 @@ def estadisticas(agrupar_por: str, sumar: str):
 # 👈 CAMBIA estos campos por los de TU coleccion (mismos nombres y tipos).
 class NuevoRegistro(BaseModel):
     titulo: str
-    popularidad: int
-    calificacion_promedio: int
+    popularidad: float
+    calificacion_promedio: float
     conteo_votos: int
     fecha_lanzamiento: str
     idioma_original: str
