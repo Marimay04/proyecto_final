@@ -14,8 +14,8 @@ import pandas as pd
 import requests
 import streamlit as st
 
-API = "https://proyecto-final-371839.onrender.com"  # 👈 si despliegas la API en la nube, cambia esta URL
-
+#API = "https://proyecto-final-371839.onrender.com"  # 👈 si despliegas la API en la nube, cambia esta URL
+API = "http://127.0.0.1:8000"
 st.set_page_config(page_title="Proyecto Final", page_icon="📊", layout="wide")
 st.title("📊 Dashboard del Proyecto Final")
 

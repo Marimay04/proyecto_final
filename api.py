@@ -38,7 +38,7 @@ NOMBRE_BD = "proyecto_streaming"            # 👈 tu base de datos en Atlas
 NOMBRE_COLECCION = "peliculas"   # 👈 tu coleccion con los datos ya limpios
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-MODELO_IA = "gemini-3.6-flash"   # 👈 usa el mode
+MODELO_IA = "gemma-4-26b-a4b-it"   # 👈 usa el mode
 
 # ---------------------------------------------------------------------------
 # 2. CONEXION A MONGODB (segura: la clave viene de una variable de entorno)
