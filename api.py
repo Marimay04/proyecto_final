@@ -38,7 +38,7 @@ NOMBRE_BD = "proyecto_streaming"            # 👈 tu base de datos en Atlas
 NOMBRE_COLECCION = "peliculas"   # 👈 tu coleccion con los datos ya limpios
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-MODELO_IA = "gemma-4-26b-a4b-it"   # 👈 usa el mode
+MODELO_IA = "gemini-3.5-flash-lite"
 
 # ---------------------------------------------------------------------------
 # 2. CONEXION A MONGODB (segura: la clave viene de una variable de entorno)
@@ -174,18 +174,42 @@ def preguntar(p: Pregunta):
  
     # 3. Llamamos a la API del modelo (¡es otra API REST!)
     url = (
-        f"https://generativelanguage.googleapis.com/v1beta/models/"
-        f"{MODELO_IA}:generateContent?key={GEMINI_API_KEY}"
-    )
+    "https://generativelanguage.googleapis.com/v1beta/models/"
+    f"{MODELO_IA}:generateContent"
+)
     try:
         r = requests.post(
-            url, json={"contents": [{"parts": [{"text": prompt}]}]}, timeout=30
+            url,
+            headers={"x-goog-api-key": GEMINI_API_KEY},
+            json={
+                "contents": [
+                    {
+                        "parts": [
+                            {"text": prompt}
+                        ]
+                    }
+                ]
+            },
+            timeout=30
         )
+
         r.raise_for_status()
+
         data = r.json()
+
         respuesta = data["candidates"][0]["content"]["parts"][0]["text"]
-    except Exception as e:
-        raise HTTPException(status_code=502, detail=f"Error al llamar al modelo: {e}")
- 
+
+    except requests.exceptions.HTTPError:
+        raise HTTPException(
+            status_code=502,
+            detail="Error al consultar Gemini. Verifica el modelo y la clave API."
+        )
+
+    except Exception:
+        raise HTTPException(
+            status_code=502,
+            detail="No fue posible obtener una respuesta de Gemini."
+        )
+
     return {"respuesta": respuesta}
 # === FIN NUEVO (IA) ========================================================
