@@ -620,6 +620,7 @@ Cinema Analytics organiza sus principales componentes en archivos independientes
 
 La siguiente estructura muestra los archivos principales utilizados por la aplicación:
 
+```text
 proyecto_final/
 │
 ├── api.py
@@ -632,6 +633,7 @@ proyecto_final/
 │   └── fondo_cine.png
 │
 └── .env (archivo privado, no incluido en GitHub)
+```
 
 ### 10.2. Descripción de los archivos
 
@@ -721,11 +723,19 @@ El proyecto permitió aplicar conocimientos relacionados con programación en Py
 En conclusión, Cinema Analytics demuestra cómo diferentes tecnologías pueden integrarse para transformar una colección de datos en una aplicación interactiva que facilita su consulta y análisis.
 
 
-
 ## 📚 14. Información académica
 
-**Integrantes** Gabriela Pinzon, Juan Eduardo Chiquiza, Mariana Mayorga y Juan Jose Robles
-**Proyecto:** Cinema Analytics  
-**Asignatura:** Programación Aplicada  
-**Tipo de proyecto:** Proyecto final universitario  
+### 👥 Integrantes
+
+- Gabriela Pinzon
+- Juan Eduardo Chiquiza
+- Mariana Mayorga
+- Juan Jose Robles
+
+**Proyecto:** Cinema Analytics
+
+**Asignatura:** Programación Aplicada
+
+**Tipo de proyecto:** Proyecto final universitario
+
 **Año:** 2026
