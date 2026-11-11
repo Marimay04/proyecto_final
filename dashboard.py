@@ -238,7 +238,7 @@ if enviar:
     else:
         payload = {
             "titulo": titulo,
-            "popularidad": int(popularidad),
+            "popularidad": float(popularidad),
             "calificacion_promedio": int(calificacion),
             "conteo_votos": int(votos),
             "fecha_lanzamiento": fecha.isoformat(),
