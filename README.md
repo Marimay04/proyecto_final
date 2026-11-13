@@ -723,9 +723,7 @@ El proyecto permitió aplicar conocimientos relacionados con programación en Py
 En conclusión, Cinema Analytics demuestra cómo diferentes tecnologías pueden integrarse para transformar una colección de datos en una aplicación interactiva que facilita su consulta y análisis.
 
 
-## 📚 14. Información académica
-
-### 👥 Integrantes
+##  Integrantes
 
 - Gabriela Pinzon
 - Juan Eduardo Chiquiza
